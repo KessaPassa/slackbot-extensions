@@ -25,6 +25,13 @@ app.listen(app.get('port'), function () {
     console.log('server launched');
 });
 
+// ルートページ
+app.get('/', function (req, res) {
+    res.header('Content-Type', 'text/plain;charset=utf-8');
+    res.status(200);
+    res.send('Server Launched');
+});
+
 // 在室情報
 app.get('/room/info', function (req, res) {
     console.log('room/info');
