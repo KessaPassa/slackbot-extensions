@@ -5,6 +5,7 @@ const MEMBERS_ID = ['U4NP14AAZ', 'U7NQVLAUT', 'U7NTL5QL8', 'U7PHBUQ2E', 'U8D5QJ2
 
 let users = [];
 export function setup() {
+    console.log('user setting setup');
     for (let i = 0; i < MEMBERS_NAME.length; i++) {
         users.push(new User(MEMBERS_ID[i], MEMBERS_NAME[i]));
     }

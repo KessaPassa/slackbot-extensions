@@ -14,9 +14,11 @@ function prepare(data, cb) {
             api.postMessage(data.channel_id, Messages.cant_chat());
             cb(false);
         }
-        // times系じゃなければok
-        else
+        // times系ならok
+        else if (matches)
             cb(true);
+        else
+            cb(false);
     });
 }
 

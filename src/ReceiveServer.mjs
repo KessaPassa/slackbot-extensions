@@ -6,7 +6,13 @@ settings.setup();
 
 
 export function getInfo(req, res) {
+
     database.getRoom(function (ids, names) {
+        if (!ids){
+            res.json({error: 'none'});
+            return;
+        }
+        console.log(ids[0]);
         // 在室してる人
         let inRoomUsers = [];
         for (let i = 0; i < ids.length; i++) {
@@ -33,36 +39,32 @@ export function getInfo(req, res) {
 }
 
 export function sendInfo(req, res) {
-    let body = req.body;
-    let name = body.name;
-
-    let user = settings.getUserByName(name);
-    // console.log(user);
+    let query = req.query;
+    let user = settings.getUserByName(query.name);
 
     if (user !== undefined) {
         let status = '';
-        if (body.status === 0) {
+        if (query.status === '0') {
             status = '在室';
-            database.login(user.Id, user.Name, function (result) {
-            });
+            database.login(user.Id, user.Name, function (result) {});
         }
-        else if (body.status === 1) {
+        else if (query.status === '1') {
             status = '帰宅';
-            database.logout(user.Id, user.Name, function (result) {
-            });
+            database.logout(user.Id, user.Name, function (result) {});
         }
-        else if (body.status === 2) {
+        else if (query.status === '2') {
             status = '一時退勤';
-            database.logout(user.Id, user.Name, function (result) {
-            });
+            database.logout(user.Id, user.Name, function (result) {});
         }
 
         let json = {
-            name: name,
+            name: user.Name,
             status: status
         };
         res.json(json);
     }
+    else
+        res.json({error: 'none'});
 }
 
 
