@@ -15,8 +15,8 @@ export function deleteMessage(channel, ts, time = 30 * 1000) {
             }
         }, function (err, res, body) {
             if (err) throw err;
-            console.log('chat.delete');
-            console.log(JSON.parse(body));
+            // console.log('chat.delete');
+            // console.log(JSON.parse(body));
         });
     }, time);
 }

@@ -5,16 +5,19 @@
 
 import request from 'request';
 
+const root_url = 'https://slack.com/api/';
+
+
 export function oauth(code) {
-    console.log('oauth.access');
     request.post({
-        url: 'https://slack.com/api/oauth.access',
+        url: root_url + 'oauth.access',
         form: {
             client_id: process.env.CLIENT_ID,
             client_secret: process.env.CLIENT_SECRET,
             code: code
         }
     }, function (err, res, body) {
+        console.log('oauth.access');
         // console.log(JSON.parse(body));
         rtmStart();
     });
@@ -22,14 +25,15 @@ export function oauth(code) {
 
 // Real Time Messageing API Start
 function rtmStart() {
+    let rtm = 'rtm.start';
+    // let rtm = 'rtm.connect';
     request.get({
-        // url: 'https://slack.com/api/rtm.start',
-        url: 'https://slack.com/api/rtm.connect',
+        url: root_url + rtm,
         qs: {
             token: process.env.access_token
         }
     }, function (err, res, body) {
-        console.log('rtm.connect');
+        console.log(rtm);
         // console.log(JSON.parse(body));
         let websocketURL = JSON.parse(body).url;
         socket(websocketURL);

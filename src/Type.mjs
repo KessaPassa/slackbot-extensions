@@ -1,5 +1,3 @@
-import {file} from "./Timeline";
-
 const _id = Symbol();
 const _name = Symbol();
 
