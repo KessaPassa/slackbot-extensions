@@ -159,12 +159,4 @@ export function postEphemeral(channel, text, user) {
             user: user
         }
     });
-    // , function(err, res, body) {
-    //     if (err) throw err;
-    //     console.log('chat.postEphemeral');
-    //     console.log(JSON.parse(body));
-    //
-    //     if (cb)
-    //         cb(JSON.parse(body));
-    // });
 }

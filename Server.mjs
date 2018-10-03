@@ -12,8 +12,6 @@ import * as serverApi from "./src/ReceiveServer";
 // APIサーバ機能
 import express from "express";
 import bodyParser from 'body-parser';
-// import mongodb from 'mongodb';
-
 
 const app = express();
 app.set('port', (process.env.PORT || 8010));
