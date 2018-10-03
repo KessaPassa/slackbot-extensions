@@ -1,1 +1,1 @@
-web: node --experimental-modules server.mjs
+web: node --experimental-modules Server.mjs
