@@ -125,7 +125,7 @@ export function getRoom(callback) {
             callback(ids, names);
         }
         else {
-            callback(null);
+            callback(null, null);
         }
     });
 }
@@ -153,7 +153,7 @@ export function login(id, name, callback) {
     });
 }
 
-export function logout(id, callback) {
+export function logout(id, name, callback) {
 
     getRoom(function (ids, names) {
         if (ids != null) {
@@ -170,7 +170,6 @@ export function logout(id, callback) {
                 }
             }
         }
-
         callback(false);
     });
 }
@@ -189,8 +188,7 @@ export function forceLogout(callback) {
             }
             callback(names);
         }
-        else{
+        else
             callback(null);
-        }
     });
 }
