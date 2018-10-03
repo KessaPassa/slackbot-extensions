@@ -1,0 +1,23 @@
+{
+  "name": "slackbot-extensions",
+  "version": "1.0.0",
+  "description": "slack botの便利機能スクリプト   <br>",
+  "main": "Server.mjs",
+  "scripts": {
+    "start": "node --experimental-modules Server.mjs",
+    "dev": "NODE_ENV=development node --experimental-modules Server.mjs"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "firebase": "^5.2.0",
+    "node-schedule": "^1.3.0",
+    "request": "^2.88.0",
+    "ws": "^6.0.0"
+  },
+  "devDependencies": {},
+  "keywords": []
+}
