@@ -12,7 +12,7 @@ export function getInfo(req, res) {
             res.json({error: 'none'});
             return;
         }
-        console.log(ids[0]);
+
         // 在室してる人
         let inRoomUsers = [];
         for (let i = 0; i < ids.length; i++) {
@@ -56,6 +56,8 @@ export function sendInfo(req, res) {
             status = '一時退勤';
             database.logout(user.Id, user.Name, function (result) {});
         }
+        else
+            res.json({error: 'none status'});
 
         let json = {
             name: user.Name,
@@ -64,7 +66,7 @@ export function sendInfo(req, res) {
         res.json(json);
     }
     else
-        res.json({error: 'none'});
+        res.json({error: 'none user'});
 }
 
 
