@@ -41,6 +41,8 @@ export function getInfo(req, res) {
 export function sendInfo(req, res) {
     let query = req.query;
     let user = settings.getUserByName(query.name);
+    console.log(query);
+    console.log(user);
 
     if (user !== undefined) {
         let status = '';
