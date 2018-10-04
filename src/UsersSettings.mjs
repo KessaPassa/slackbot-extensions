@@ -2,6 +2,8 @@ import {User} from './Type';
 
 const MEMBERS_NAME = ['古川義人', '染谷一輝', '土屋克典', '林敏生', '酒井寛崇', '大場大輔', '原圭範'];
 const MEMBERS_ID = ['U4NP14AAZ', 'U7NQVLAUT', 'U7NTL5QL8', 'U7PHBUQ2E', 'U8D5QJ21W', 'U81KX7JTX', 'U96FB2WKE'];
+// const MEMBERS_NAME = ['染谷一輝'];
+// const MEMBERS_ID = ['U93KJUHQT'];
 
 let users = [];
 export function setup() {

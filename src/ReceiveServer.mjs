@@ -57,7 +57,11 @@ export function sendInfo(req, res) {
             database.logout(user.Id, user.Name, function (result) {});
         }
         else
-            res.json({error: 'none status'});
+            res.json({
+                error: 'none status',
+                status: status,
+                type: typeof(status)
+            });
 
         let json = {
             name: user.Name,
@@ -66,7 +70,10 @@ export function sendInfo(req, res) {
         res.json(json);
     }
     else
-        res.json({error: 'none user'});
+        res.json({
+            error: 'none user',
+            user: user
+        });
 }
 
 
