@@ -24,7 +24,6 @@ export function getInfo(req, res) {
         for (let i = 0; i < inRoomUsers.length; i++) {
             // inRoomにないなら
             let index = goBackUsers.indexOf(inRoomUsers[i]);
-            console.log(index);
             if (index !== -1) {
                 goBackUsers.splice(index, 1);
             }
