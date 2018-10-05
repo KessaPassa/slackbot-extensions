@@ -31,6 +31,7 @@ export function getUserById(id){
 
 export function getUserByName(name){
     let index = MEMBERS_NAME.indexOf(name);
+    console.log('name :'+name + ', index: '+index)
     return users[index];
 }
 
