@@ -45,7 +45,10 @@ export function getChannelName(channel_id, callback) {
         }
     }, function (err, res, body) {
         if (err) throw err;
-        callback('#' + JSON.parse(body).channel.name);
+
+        // ダイレクトメッセージでも反応するので、チャンネル情報が取れないなら何もしない
+        if (JSON.parse(body).channel !== undefined)
+            callback('#' + JSON.parse(body).channel.name);
     });
 }
 
