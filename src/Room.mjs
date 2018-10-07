@@ -23,7 +23,9 @@ export function login(message) {
                     if (result)
                         api.postMessage(message.channel_id, `<@${id}> ${Messages.login()}`);
                     else{
-                        api.deleteMessage(message.channel_id, message.ts);
+                        // slackから直接コマンド入力したなら
+                        if (message.ts !== undefined)
+                            api.deleteMessage(message.channel_id, message.ts);
                         api.postEphemeral(message.channel_id, `<@${id}> ${Messages.already_login()}`, message.user_id);
                     }
                 });
@@ -40,7 +42,9 @@ export function logout(message) {
                 if (result)
                     api.postMessage(message.channel_id, `<@${id}> ${Messages.logout()}`);
                 else{
-                    api.deleteMessage(message.channel_id, message.ts);
+                    // slackから直接コマンド入力したなら
+                    if (message.ts !== undefined)
+                        api.deleteMessage(message.channel_id, message.ts);
                     api.postEphemeral(message.channel_id, `<@${id}> ${Messages.already_logout()}`, message.user_id);
                 }
             });
