@@ -42,9 +42,7 @@ export function getInfo(req, res) {
 export function sendInfo(req, res) {
     let query = req.query;
     let user = settings.getUserByName(query.name);
-    console.log(query);
     let message = new Message(user.Id, undefined, process.env.room_id, undefined, true, process.env.BOT_ID, undefined, undefined);
-    console.log(message);
 
     if (user !== undefined) {
         let status = '';
