@@ -1,6 +1,7 @@
 import * as database from './Database';
-
+import {Message} from "./Type";
 import * as settings from './UsersSettings';
+import * as room from './Room';
 
 settings.setup();
 
@@ -8,7 +9,8 @@ settings.setup();
 export function getInfo(req, res) {
 
     database.getRoom(function (ids, names) {
-        if (!ids){
+        console.log(ids);
+        if (!ids) {
             res.json({error: 'none'});
             return;
         }
@@ -24,7 +26,6 @@ export function getInfo(req, res) {
         for (let i = 0; i < inRoomUsers.length; i++) {
             // inRoomにないなら
             let index = goBackUsers.indexOf(inRoomUsers[i]);
-            console.log(index);
             if (index !== -1) {
                 goBackUsers.splice(index, 1);
             }
@@ -41,23 +42,22 @@ export function getInfo(req, res) {
 export function sendInfo(req, res) {
     let query = req.query;
     let user = settings.getUserByName(query.name);
-    console.log(query);
-    console.log(user);
+    let message = new Message(user.Id, undefined, process.env.room_id, undefined, true, process.env.BOT_ID, undefined, undefined);
 
     if (user !== undefined) {
         let status = '';
         if (query.status === '0') {
             status = '在室';
-            database.login(user.Id, user.Name, function (result) {});
+            room.login(message);
         }
         else if (query.status === '1') {
             status = '帰宅';
-            database.logout(user.Id, user.Name, function (result) {});
+            room.logout(message);
         }
-        else if (query.status === '2') {
-            status = '一時退勤';
-            database.logout(user.Id, user.Name, function (result) {});
-        }
+        // else if (query.status === '2') {
+        //     status = '一時退勤';
+        //     room.logout(message);
+        // }
         else
             res.json({
                 error: 'none status',
@@ -81,7 +81,7 @@ export function sendInfo(req, res) {
 
 import * as bot from './SetupBot';
 
-export function oauth(req, res){
+export function oauth(req, res) {
     res.send('oauth setting is collect');
 
     let code = req.query.code;

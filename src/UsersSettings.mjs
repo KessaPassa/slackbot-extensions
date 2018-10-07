@@ -31,13 +31,16 @@ export function getUserById(id){
 
 export function getUserByName(name){
     let index = MEMBERS_NAME.indexOf(name);
+    console.log('name :'+name + ', index: '+index);
     return users[index];
 }
 
 export function getOnlyIds(){
-    return MEMBERS_ID;
+    // 参照渡しにしないようにconcat()
+    return MEMBERS_ID.concat();
 }
 
 export function getOnlyNames(){
-    return MEMBERS_NAME;
+    // 参照渡しにしないようにconcat()
+    return MEMBERS_NAME.concat();
 }
