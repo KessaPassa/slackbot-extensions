@@ -67,7 +67,7 @@ import * as room from './src/Room';
 
 // 時限式で強制ログアウト
 schedule.scheduleJob({
-    hour: 6,
+    hour: 0,
     minute: 0
 }, function () {
     room.forceLogout();
