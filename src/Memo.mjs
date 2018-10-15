@@ -8,7 +8,9 @@ export function add(message) {
 
     let matches = message.text.match(/add (.*)/i);
     if (matches) {
-        let text = matches[1];
+        // 改行しても記録できる
+        let text = message.text.split('add ')[1];
+        console.log(text);
 
         api.getChannelName(message.channel_id, function (channel_name) {
             database.add(message.channel_id, channel_name, text, function (result) {

@@ -1,3 +1,5 @@
+const url_readme = 'https://github.com/KessaPassa/slackbot-extensions/blob/master/README.md';
+
 // -------- 内部用 --------
 
 // エラー箇所を関数名で示す
@@ -10,6 +12,11 @@ export function error(function_name) {
 // -------- botに喋らせる用(cv: エルフのえる) --------
 export function header() {
     return 'える知ってるよ〜。';
+}
+
+// help
+export function help() {
+    return `えるの説明書だよ\n${url_readme}`;
 }
 
 // add

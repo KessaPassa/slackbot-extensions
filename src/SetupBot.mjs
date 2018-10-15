@@ -102,14 +102,19 @@ function mainProcess(data) {
 import * as timelime from './Timeline';
 import * as memo from './Memo';
 import * as room from './Room';
+import * as etc from './ETC';
 
 // メンション有り無しやコマンドに応じた分岐処理
 function switchProcess(message) {
     // botにメンションなら
     if (message.mention_user === process.env.BOT_ID) {
 
+        if (message.mention_text === 'help'){
+            etc.help(message);
+        }
+
         // メモに追加
-        if (message.mention_text.match(/add (.*)/i))
+        else if (message.mention_text.match(/add (.*)/i))
             memo.add(message);
 
         // 指定された番号のメモを削除
