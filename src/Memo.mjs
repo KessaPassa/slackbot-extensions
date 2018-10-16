@@ -4,6 +4,7 @@ import * as Messages from './Messages';
 
 
 export function add(message) {
+    console.log('addコマンド実行');
     api.deleteMessage(message.channel_id, message.ts);
 
     let matches = message.text.match(/add (.*)/i);
@@ -21,6 +22,7 @@ export function add(message) {
 }
 
 export function remove(message) {
+    console.log('removeコマンド実行');
     api.deleteMessage(message.channel_id, message.ts);
 
     let matches = message.text.match(/remove (\d+)/);
@@ -35,7 +37,7 @@ export function remove(message) {
                 else if (result === -1)
                     content = Messages.cant_remove();
                 else
-                    content = Messages.removed(num);
+                    content = Messages.removed(num) + `\n${result}`;
 
                 api.postEphemeral(message.channel_id, content, message.user_id);
             });
@@ -44,6 +46,7 @@ export function remove(message) {
 }
 
 export function memo(message) {
+    console.log('memoコマンド実行');
     api.deleteMessage(message.channel_id, message.ts, 2 * 60 * 1000);
 
     database.getChannels(message.channel_id, function (text_array) {
