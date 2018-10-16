@@ -69,7 +69,7 @@ export function none_peopele() {
 }
 
 export function force_logout(){
-    return '6時になったから強制退去したよ';
+    return '0時になったから強制退去したよ';
 }
 
 

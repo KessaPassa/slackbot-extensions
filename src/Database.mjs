@@ -87,8 +87,11 @@ export function remove(id, name, num, callback) {
         }
         //追加
         else {
+            let remove_message = text_array[num];
+
+            // データベースから削除
             text_array.splice(num, 1);
-            console.log(text_array);
+            // console.log(text_array);
 
             let json = {};
             for (let i = 0; i < text_array.length; i++) {
@@ -100,7 +103,9 @@ export function remove(id, name, num, callback) {
                 name: name,
                 text: json
             });
-            result = 'complete';
+
+            // 成功なら削除するメッセージ文を返す
+            result = remove_message;
         }
 
         callback(result);
@@ -188,7 +193,7 @@ export function forceLogout(callback) {
                     text: null
                 });
             }
-            callback(names);
+            callback(ids);
         }
         else
             callback(null);
