@@ -68,6 +68,14 @@ export function none_peopele() {
     return '誰もいないよ';
 }
 
+export function warning(){
+    return '0時になったよ。ログアウトし忘れた人は \`@elu logout\`してね';
+}
+
+export function not_warning(){
+    return '0時になったよ。今日はみんな帰ったね。お疲れ様';
+}
+
 export function force_logout(){
     return '0時になったから強制退去したよ';
 }
