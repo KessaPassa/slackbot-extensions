@@ -139,7 +139,7 @@ export function login(id, name, callback) {
 
     getRoom(function (ids, names) {
         if (ids != null && names != null) {
-            console.log(ids);
+            // console.log(ids);
             for (let i = 0; i < ids.length; i++) {
                 // 既にログインしているなら
                 if (ids[i] === id) {
@@ -163,7 +163,7 @@ export function logout(id, callback) {
 
     getRoom(function (ids, names) {
         if (ids != null && names != null) {
-            console.log(ids);
+            // console.log(ids);
             for (let i = 0; i < ids.length; i++) {
                 // ログインしているなら
                 if (ids[i] === id) {
