@@ -70,7 +70,7 @@ schedule.scheduleJob({
     hour: 0,
     minute: 0
 }, function () {
-    room.forceLogout();
+    room.warning();
 });
 
 
