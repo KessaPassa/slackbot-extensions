@@ -14,6 +14,7 @@ function prepare(message, cb){
 }
 
 export function login(message) {
+    console.log('loginコマンド実行');
     prepare(message, function (judge) {
         if (judge){
             let id = message.user_id;
@@ -35,6 +36,7 @@ export function login(message) {
 }
 
 export function logout(message) {
+    console.log('logoutコマンド実行');
     prepare(message, function (judge) {
         if (judge) {
             let id = message.user_id;
@@ -53,6 +55,7 @@ export function logout(message) {
 }
 
 export function room(message) {
+    console.log('roomコマンド実行');
     api.deleteMessage(message.channel_id, message.ts);
     
     prepare(message, function (judge) {
@@ -75,12 +78,13 @@ export function room(message) {
 }
 
 export function forceLogout(){
-    database.forceLogout(function (names) {
-        console.log(`強制ログアウト, 数: ${names.length}`);
-        if (names.length !== 0) {
+    console.log('forceLogoutコマンド実行');
+    database.forceLogout(function (ids) {
+        console.log(`強制ログアウト, 数: ${ids.length}`);
+        if (ids.length !== 0) {
             let list = Messages.force_logout() + '\n';
-            for (let i=0; i<names.length; i++){
-                list += `${names[i]}\n`;
+            for (let i=0; i<ids.length; i++){
+                list += `<@${ids[i]}>\n`;
             }
             api.postMessage(process.env.room_id, list);
         }

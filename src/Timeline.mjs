@@ -1,6 +1,5 @@
 import * as api from './SlackApi';
 import * as Messages from './Messages';
-import request from 'request';
 
 
 // 規定通りならtrue, 何かがダメならfalse
@@ -24,6 +23,7 @@ function prepare(data, cb) {
 
 
 export function chat(message) {
+    console.log('chatコマンド実行');
     prepare(message, function (judge) {
         if (judge) {
             api.getMessagePermalink(message.channel_id, message.ts, function (permalink) {
@@ -39,6 +39,7 @@ export function chat(message) {
 }
 
 export function file(message) {
+    console.log('fileコマンド実行');
     prepare(message, function (judge) {
         if (judge) {
             api.getFilePermalink(message.file_id, function (permalink) {
