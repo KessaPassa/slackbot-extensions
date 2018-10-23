@@ -20,6 +20,10 @@ app.use(bodyParser.json());
 
 // postだと上手く動作しない
 
+import * as bot from './src/SetupBot';
+
+bot.setup();
+
 // Run Server
 app.listen(app.get('port'), function () {
     console.log('server launched');
@@ -29,7 +33,10 @@ app.listen(app.get('port'), function () {
 app.get('/', function (req, res) {
     res.header('Content-Type', 'text/plain;charset=utf-8');
     res.status(200);
-    res.send('Server Launched');
+    res.send('Server Rebooted');
+
+    // botをrebootする
+    bot.setup();
 });
 
 // 在室情報
@@ -72,8 +79,3 @@ schedule.scheduleJob({
 }, function () {
     room.warning();
 });
-
-
-import * as bot from './src/SetupBot';
-
-bot.setup();
