@@ -36,7 +36,7 @@ app.get('/', function (req, res) {
     res.send('Server Rebooted');
 
     // botをrebootする
-    bot.setup();
+    // bot.setup();
 });
 
 // 在室情報
