@@ -37,6 +37,7 @@ app.get('/', function (req, res) {
 
     // botをrebootする
     // bot.setup();
+    bot.reboot()
 });
 
 // 在室情報
