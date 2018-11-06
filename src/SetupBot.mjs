@@ -65,7 +65,7 @@ export function socket(url) {
     ws.on('close', function(data){
         console.log('Close WebSocket');
         // 3病後に再起動
-        setTimeout(setup(), 3000);
+        // setTimeout(setup(), 3000);
     });
 }
 
