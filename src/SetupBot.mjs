@@ -47,12 +47,13 @@ export function setup() {
 
 import WebSocket from 'ws';
 
+let ws = null;
 export function socket(url) {
     console.log(url);
-    let ws = new WebSocket(url);
+    ws = new WebSocket(url);
 
     ws.on('open', function () {
-        console.log('Start WebSocket');
+        console.log('Open WebSocket');
     });
 
     ws.on('message', function (data) {
@@ -60,6 +61,20 @@ export function socket(url) {
         // console.log(data);
         mainProcess(data);
     });
+
+    ws.on('close', function(data){
+        console.log('Close WebSocket');
+        // 3病後に再起動
+        // setTimeout(setup(), 3000);
+    });
+}
+
+export function reboot(){
+    if (ws !== null) {
+        ws.close();
+        ws = null;
+        rtmStart();
+    }
 }
 
 
