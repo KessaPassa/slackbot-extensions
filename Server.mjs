@@ -14,7 +14,7 @@ import express from "express";
 import bodyParser from 'body-parser';
 
 const app = express();
-app.set('port', (process.env.PORT || 8010));
+app.set('port', (process.env.PORT || 8000));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
@@ -33,7 +33,8 @@ app.listen(app.get('port'), function () {
 app.get('/', function (req, res) {
     res.header('Content-Type', 'text/plain;charset=utf-8');
     res.status(200);
-    res.send('Server Rebooted');
+    res.send('Bot Rebooted');
+    console.log('root page accessed');
 
     // botをrebootする
     // bot.setup();
@@ -56,10 +57,20 @@ app.get('/room/management', function (req, res) {
 
 // EventAPI認証用
 app.get('/events', function (req, res) {
-    console.log('events');
-    res.header('Content-Type', 'text/plain;charset=utf-8');
+    res.header('Content-Type', 'application/json');
     res.status(200);
-    res.json({challenge: 'ok'});
+    // res.json({challenge: 'ok'});
+    res.send({
+        'token': '1x4g2qeDx2G9TX4TG219NnIU',
+        'challenge': res.challenge,
+        'type': 'url_verification'
+    });
+    console.log(res.body);
+    console.log(req.body);
+    console.log('リクエスト');
+    console.log(req.body);
+    console.log('レスポンス');
+    console.log(res.body);
 });
 
 // bot oauth認証用
