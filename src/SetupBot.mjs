@@ -48,6 +48,7 @@ export function setup() {
 import WebSocket from 'ws';
 
 let ws = null;
+
 export function socket(url) {
     console.log(url);
     ws = new WebSocket(url);
@@ -62,14 +63,14 @@ export function socket(url) {
         mainProcess(data);
     });
 
-    ws.on('close', function(data){
+    ws.on('close', function (data) {
         console.log('Close WebSocket');
         // 3病後に再起動
         // setTimeout(setup(), 3000);
     });
 }
 
-export function reboot(){
+export function reboot() {
     if (ws !== null) {
         ws.close();
         ws = null;
@@ -79,6 +80,7 @@ export function reboot(){
 
 
 import {Message} from "./Type";
+import * as event from './Event';
 
 // ここがslackからデータを受け取るメイン処理
 function mainProcess(data) {
@@ -111,6 +113,11 @@ function mainProcess(data) {
         let message = new Message(data.user, text, data.channel, data.ts, is_mention, mention_user, mention_text, file_id);
         switchProcess(message);
     }
+    // Event API
+    else {
+        if (type === 'channel_created')
+            event.channel_created(data.channel.id)
+    }
 }
 
 
@@ -124,9 +131,8 @@ function switchProcess(message) {
     // botにメンションなら
     if (message.mention_user === process.env.BOT_ID) {
 
-        if (message.mention_text === 'help'){
+        if (message.mention_text === 'help')
             etc.help(message);
-        }
 
         // メモに追加
         else if (message.mention_text.match(/add (.*)/i))
