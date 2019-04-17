@@ -56,21 +56,14 @@ app.get('/room/management', function (req, res) {
 });
 
 // EventAPI認証用
-app.get('/events', function (req, res) {
+app.post('/events', function (req, res) {
     res.header('Content-Type', 'application/json');
     res.status(200);
-    // res.json({challenge: 'ok'});
     res.send({
-        'token': '1x4g2qeDx2G9TX4TG219NnIU',
-        'challenge': res.challenge,
+        'token': req.body.token,
+        'challenge': req.body.challenge,
         'type': 'url_verification'
     });
-    console.log(res.body);
-    console.log(req.body);
-    console.log('リクエスト');
-    console.log(req.body);
-    console.log('レスポンス');
-    console.log(res.body);
 });
 
 // bot oauth認証用
