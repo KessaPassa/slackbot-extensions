@@ -41,18 +41,13 @@ app.get('/', function (req, res) {
     bot.reboot()
 });
 
-// 在室情報
-app.get('/room/info', function (req, res) {
-    console.log('room/info');
+// ローカルサーバから得た在室情報をデータベースに反映
+app.get('/room/update', function (req, res) {
+    console.log('room/update');
     res.header('Content-Type', 'text/plain;charset=utf-8');
-    serverApi.getInfo(req, res);
-});
-
-// login, logout管理
-app.get('/room/management', function (req, res) {
-    console.log('room/management');
-    res.header('Content-Type', 'text/plain;charset=utf-8');
-    serverApi.sendInfo(req, res);
+    res.status(200);
+    res.send('recieved');
+    serverApi.updateStayingUsers(req, res);
 });
 
 // EventAPI認証用
@@ -71,16 +66,4 @@ app.get('/oauth', function (req, res) {
     console.log('oauth');
     res.header('Content-Type', 'text/plain;charset=utf-8');
     serverApi.oauth(req, res);
-});
-
-
-import schedule from 'node-schedule';
-import * as room from './src/Room';
-
-// 時限式で強制ログアウト
-schedule.scheduleJob({
-    hour: 0,
-    minute: 0
-}, function () {
-    room.warning();
 });

@@ -26,7 +26,8 @@ export function getChannels(id, callback) {
     database.ref(`${MEMO}/${id}`).once('value').then(function (snapshot) {
         if (snapshot.val() != null) {
             callback(snapshot.val().text);
-        } else {
+        }
+        else {
             callback(null);
         }
     });
@@ -127,26 +128,12 @@ export function getRoom(callback) {
             });
 
             callback(ids, names);
-        } else {
+        }
+        else {
             callback(null, null);
         }
     });
 }
-
-function deleteRoom(callback) {
-    getRoom(function (ids, names) {
-        ids.forEach(function (id) {
-            // nullをセットすることで削除する
-            database.ref(`${ROOM}/${id}`).set({
-                id: null,
-                name: null
-            });
-        });
-
-        callback();
-    });
-}
-
 
 export function login(id, name, callback) {
 
@@ -194,20 +181,21 @@ export function logout(id, callback) {
     });
 }
 
-export function updateStayingUsers(ids, names) {
+// 全員強制logout
+export function forceLogout(callback) {
 
-    deleteRoom(function () {
-        if (ids && names) {
+    getRoom(function (ids, names) {
+        if (ids != null) {
             for (let i = 0; i < ids.length; i++) {
-                let id = ids[i];
-                let name = names[i];
-
-                //データベースにセット
-                database.ref(`${ROOM}/${id}`).set({
-                    id: id,
-                    name: name
+                // nullをセットすることで削除する
+                database.ref(`${ROOM}/${ids[i]}`).set({
+                    name: null,
+                    text: null
                 });
             }
+            callback(ids);
         }
+        else
+            callback(null);
     });
 }
