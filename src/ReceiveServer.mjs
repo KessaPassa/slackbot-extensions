@@ -2,7 +2,7 @@ import * as room from './Room';
 
 export function updateStayingUsers(req, res) {
     let query = req.query;
-    // console.log(query);
+    console.log(query);
 
     let ids = query.ids;
     let names = query.names;
