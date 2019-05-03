@@ -1,6 +1,7 @@
 import * as database from './Database';
 import * as api from './SlackApi';
 import * as Messages from './Messages';
+import {getRoom} from "./Database";
 
 
 // 発言場所がroom_nameチャンネルならtrue, そうじゃないならfalse
@@ -54,8 +55,9 @@ export function logout(message) {
     });
 }
 
-export function stay(message) {
-    console.log('stayコマンド実行');
+export function room(message) {
+    console.log('roomコマンド実行');
+    api.deleteMessage(message.channel_id, message.ts);
 
     prepare(message, function (judge) {
         if (judge) {
@@ -70,12 +72,40 @@ export function stay(message) {
                         list += `${names[i]}\n`;
                     }
                 }
-                api.postMessage(message.channel_id, list);
+                api.postEphemeral(message.channel_id, list, message.user_id);
             });
         }
     });
 }
 
-export function update(ids, names) {
-    database.updateStayingUsers(ids, names);
+// logoutしてない人用にメンションで警告を出す
+export function warning() {
+    console.log('warningコマンド実行');
+    getRoom(function (ids, names) {
+        if (ids != null && ids.length !== 0) {
+            let list = Messages.warning() + '\n';
+            for (let i = 0; i < ids.length; i++) {
+                list += `<@${ids[i]}>\n`;
+            }
+            api.postMessage(process.env.room_id, list);
+        }
+        else
+            api.postMessage(process.env.room_id, Messages.not_warning());
+    });
+
+}
+
+// 廃止機能
+export function forceLogout() {
+    console.log('forceLogoutコマンド実行');
+    database.forceLogout(function (ids) {
+        console.log(`強制ログアウト, 数: ${ids.length}`);
+        if (ids.length !== 0) {
+            let list = Messages.force_logout() + '\n';
+            for (let i = 0; i < ids.length; i++) {
+                list += `<@${ids[i]}>\n`;
+            }
+            api.postMessage(process.env.room_id, list);
+        }
+    });
 }
