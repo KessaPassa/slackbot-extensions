@@ -156,8 +156,8 @@ function switchProcess(message) {
             room.logout(message);
 
         // 現在の在室状況
-        else if (message.mention_text === 'stay')
-            room.stay(message);
+        else if (message.mention_text === 'room')
+            room.room(message);
     }
 
     // ファイルなら
