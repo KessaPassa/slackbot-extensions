@@ -2,6 +2,7 @@ import * as database from './Database';
 import * as api from './SlackApi';
 import * as Messages from './Messages';
 
+let stayingNamesForHours = new Set();
 
 // 発言場所がroom_nameチャンネルならtrue, そうじゃないならfalse
 function prepare(message, cb) {
@@ -15,6 +16,7 @@ function prepare(message, cb) {
 
 export function login(message) {
     console.log('loginコマンド実行');
+
     prepare(message, function (judge) {
         if (judge) {
             let id = message.user_id;
@@ -37,6 +39,7 @@ export function login(message) {
 
 export function logout(message) {
     console.log('logoutコマンド実行');
+
     prepare(message, function (judge) {
         if (judge) {
             let id = message.user_id;
@@ -56,26 +59,49 @@ export function logout(message) {
 
 export function stay(message) {
     console.log('stayコマンド実行');
+    api.deleteMessage(message.channel_id, message.ts);
 
     prepare(message, function (judge) {
         if (judge) {
             database.getRoom(function (ids, names) {
                 let num = ids.length;
-                let list = `【現在の在室メンバー${num}人】\n`;
+                let list = `【現在${num}人】\n`;
                 if (num === 0) {
                     list += Messages.none_peopele();
-                }
-                else {
+                } else {
                     for (let i = 0; i < num; i++) {
                         list += `${names[i]}\n`;
                     }
                 }
-                api.postMessage(message.channel_id, list);
+                api.postEphemeral(message.channel_id, list, message.user_id);
             });
         }
     });
 }
 
 export function update(ids, names) {
+    names.forEach(function (name) {
+        stayingNamesForHours.add(name);
+    });
     database.updateStayingUsers(ids, names);
+}
+
+export function notificatePerHours() {
+    console.log('notificatePerHoursコマンド実行');
+
+    let beforeHour = new Date(new Date().setHours(new Date().getHours() - 1)).getHours();
+    let num = stayingNamesForHours.size;
+    let list = `【${beforeHour}時台に在室した人数 ${num}人】\n`;
+    if (num > 0) {
+        stayingNamesForHours.forEach(function (name) {
+            list += `${name}\n`;
+        });
+        api.postMessage(process.env.room_id, list);
+    } else {
+        list += Messages.none_peopele();
+        api.postMessage(process.env.room_id, list);
+    }
+
+    // リセットする
+    stayingNamesForHours = new Set();
 }

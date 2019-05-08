@@ -29,7 +29,7 @@ export function list_header() {
     return '【ここのメモ帳だよ】';
 }
 
-export function none_memo(){
+export function none_memo() {
     return 'メモはないよ';
 }
 
@@ -48,36 +48,24 @@ export function removed(num) {
 
 
 // room
-export function already_login(){
+export function already_login() {
     return 'もうログインしてるよ';
 }
 
-export function login(){
+export function login() {
     return 'いらっしゃ〜いだよ';
 }
 
-export function already_logout(){
+export function already_logout() {
     return 'もうログアウトしてるよ';
 }
 
-export function logout(){
+export function logout() {
     return 'お疲れ様だよ';
 }
 
 export function none_peopele() {
     return '誰もいないよ';
-}
-
-export function warning(){
-    return '0時になったよ。ログアウトし忘れた人は \`@elu logout\`してね';
-}
-
-export function not_warning(){
-    return '0時になったよ。今日はみんな帰ったね。お疲れ様';
-}
-
-export function force_logout(){
-    return '0時になったから強制退去したよ';
 }
 
 
