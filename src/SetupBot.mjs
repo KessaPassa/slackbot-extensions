@@ -131,11 +131,16 @@ function switchProcess(message) {
     // botにメンションなら
     if (message.mention_user === process.env.BOT_ID) {
 
+        // 説明書を表示
         if (message.mention_text === 'help')
             etc.help(message);
 
+
+        else if (message.mention_text.match(/shuffle/))
+            etc.shuffle(message);
+
         // メモに追加
-        else if (message.mention_text.match(/add (.*)/i))
+        else if (message.mention_text.match(/add (.*)/))
             memo.add(message);
 
         // 指定された番号のメモを削除
