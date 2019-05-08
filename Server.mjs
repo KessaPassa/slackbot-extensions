@@ -67,3 +67,14 @@ app.get('/oauth', function (req, res) {
     res.header('Content-Type', 'text/plain;charset=utf-8');
     serverApi.oauth(req, res);
 });
+
+import schedule from 'node-schedule';
+import * as room from './src/Room';
+
+// 1時間ごとに実行
+schedule.scheduleJob({
+    hour: [...Array(24).keys()],
+    minute: 0
+}, function () {
+    room.notificatePerHours();
+});
