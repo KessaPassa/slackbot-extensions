@@ -7,7 +7,7 @@ export function add(message) {
     console.log('addコマンド実行');
     api.deleteMessage(message.channel_id, message.ts);
 
-    let matches = message.text.match(/add (.*)/i);
+    let matches = message.text.match(/add (.*)/);
     if (matches) {
         // 改行しても記録できる
         let text = message.text.split('add ')[1];
