@@ -96,11 +96,15 @@ export function notificatePerHours() {
         stayingNamesForHours.forEach(function (name) {
             list += `${name}\n`;
         });
-        api.postMessage(process.env.room_id, list);
-    } else {
-        list += Messages.none_peopele();
-        api.postMessage(process.env.room_id, list);
     }
+    else {
+        list += Messages.none_peopele();
+    }
+
+    api.postMessage(process.env.room_id, list, function (message) {
+        // 1週間で消えるようにする
+        api.deleteMessage(message.channel, message.ts, 7*24*60*60*1000);
+    });
 
     // リセットする
     stayingNamesForHours = new Set();
