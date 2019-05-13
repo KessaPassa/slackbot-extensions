@@ -151,15 +151,6 @@ function switchProcess(message) {
         else if (message.mention_text === 'memo')
             memo.memo(message);
 
-
-        // loginする
-        else if (message.mention_text === 'login')
-            room.login(message);
-
-        // logoutする
-        else if (message.mention_text === 'logout')
-            room.logout(message);
-
         // 現在の在室状況
         else if (message.mention_text === 'stay')
             room.stay(message);
