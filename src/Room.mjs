@@ -3,6 +3,7 @@ import * as api from './SlackApi';
 import * as Messages from './Messages';
 
 let stayingNamesForHours = new Set();
+let isLocalArive = false;
 
 // 発言場所がroom_nameチャンネルならtrue, そうじゃないならfalse
 function prepare(message, cb) {
@@ -84,28 +85,39 @@ export function update(ids, names) {
         stayingNamesForHours.add(name);
     });
     database.updateStayingUsers(ids, names);
+    isLocalArive = true;
 }
 
 export function notificatePerHours() {
     console.log('notificatePerHoursコマンド実行');
 
-    let beforeHour = new Date(new Date().setHours(new Date().getHours() - 1)).getHours();
-    let num = stayingNamesForHours.size;
-    let list = `【${beforeHour}時台に在室した人数 ${num}人】\n`;
-    if (num > 0) {
-        stayingNamesForHours.forEach(function (name) {
-            list += `${name}\n`;
+    // macアドレス収集しているローカルサーバが生きているならば
+    if (isLocalArive) {
+        let beforeHour = new Date(new Date().setHours(new Date().getHours() - 1)).getHours();
+        let num = stayingNamesForHours.size;
+        let list = `【${beforeHour}時台に在室した人数 ${num}人】\n`;
+        if (num > 0) {
+            stayingNamesForHours.forEach(function (name) {
+                list += `${name}\n`;
+            });
+        } else {
+            list += Messages.none_peopele();
+        }
+
+        api.postMessage(process.env.room_id, list, function (message) {
+            // 1週間で消えるようにする
+            api.deleteMessage(message.channel, message.ts, 7 * 24 * 60 * 60 * 1000);
+        });
+
+        // リセットする
+        stayingNamesForHours = new Set();
+    }
+    // 死んでいるなら
+    else{
+        api.postMessage(process.env.room_id, Messages.local_server_down(), function (message) {
+            // 1週間で消えるようにする
+            api.deleteMessage(message.channel, message.ts, 7 * 24 * 60 * 60 * 1000);
         });
     }
-    else {
-        list += Messages.none_peopele();
-    }
-
-    api.postMessage(process.env.room_id, list, function (message) {
-        // 1週間で消えるようにする
-        api.deleteMessage(message.channel, message.ts, 7*24*60*60*1000);
-    });
-
-    // リセットする
-    stayingNamesForHours = new Set();
+    isLocalArive = false;
 }
