@@ -68,6 +68,10 @@ export function none_peopele() {
     return '誰もいないよ';
 }
 
+export function local_server_down() {
+    return 'ローカルサーバが落ちてるよ';
+}
+
 
 // timeline
 export function cant_chat() {

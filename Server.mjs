@@ -41,6 +41,7 @@ app.get('/', function (req, res) {
     bot.reboot()
 });
 
+let isLocalAlive = false;
 // ローカルサーバから得た在室情報をデータベースに反映
 app.get('/room/update', function (req, res) {
     console.log('room/update');
