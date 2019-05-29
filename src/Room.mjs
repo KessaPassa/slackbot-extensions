@@ -81,15 +81,19 @@ export function stay(message) {
 }
 
 export function update(ids, names) {
-    names.forEach(function (name) {
-        stayingNamesForHours.add(name);
-    });
-    database.updateStayingUsers(ids, names);
+    if (ids && names) {
+        names.forEach(function (name) {
+            stayingNamesForHours.add(name);
+        });
+        database.updateStayingUsers(ids, names);
+    }
     isLocalArive = true;
+    console.log('func update: '+isLocalArive);
 }
 
 export function notificatePerHours() {
     console.log('notificatePerHoursコマンド実行');
+    console.log('func notificatePerHours: '+isLocalArive);
 
     // macアドレス収集しているローカルサーバが生きているならば
     if (isLocalArive) {
