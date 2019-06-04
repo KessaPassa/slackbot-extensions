@@ -71,6 +71,7 @@ export function add(id, name, text, callback) {
 }
 
 export function remove(id, name, num, callback) {
+    console.log(num);
 
     //データが存在してるか読み取り
     getChannels(id, function (text_array) {

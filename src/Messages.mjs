@@ -19,27 +19,25 @@ export function help() {
     return `えるの説明書だよ\n${url_readme}`;
 }
 
-// add
-export function add() {
-    return 'メモを追加したよ';
-}
-
-//memo(Database)
+//memo
 export function list_header() {
     return '【ここのメモ帳だよ】';
+}
+
+export function add() {
+    return 'メモを追加したよ';
 }
 
 export function none_memo() {
     return 'メモはないよ';
 }
 
-// remove
-export function cant_data() {
-    return header() + 'データがないんだよ〜';
+export function cant_data(num) {
+    return `${num}番はデータがないんだよ`;
 }
 
-export function cant_remove() {
-    return header() + 'その番号ないんだよ〜';
+export function cant_remove(num) {
+    return `${num}番は削除失敗したよ`;
 }
 
 export function removed(num) {
@@ -80,7 +78,7 @@ export function cant_chat() {
 
 // Common
 export function wrong_arguments() {
-    return '引数が間違ってるよ〜';
+    return '引数が間違ってるよ';
 }
 
 // module.exports = class Messages {
