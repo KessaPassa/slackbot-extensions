@@ -65,37 +65,57 @@ function remove(message, content) {
     api.deleteMessage(message.channel_id, message.ts);
 
     // 数字なら
-    let matches = content.match(/^(\d)(\s*)(,(\s*)?\d)*$/g);
+    let matches = content.match(/(\d)/g);
     if (matches) {
-        // コンマで分割しながら文字列中の空白を除去
-        let array = content.split(',').map(function (item) {
-            return item.trim();
-        });
+        let num = matches[0];
 
-        // 削除すると番号が繰り下がるので逆順で処理する
-        array.sort(
-            function (a, b) {
-                return (a < b ? 1 : -1);
-            }
-        );
-
-        // To-Do 複数を指定すると一つしか消えないバグ
         api.getChannelName(message.channel_id, function (channel_name) {
-            array.forEach(function (num) {
-                database.remove(message.channel_id, channel_name, num, function (result) {
-                    let content = '';
-                    if (result == null)
-                        content = Messages.cant_data(num);
-                    else if (result === -1)
-                        content = Messages.cant_remove(num);
-                    else
-                        content = Messages.removed(num) + `\n${result}`;
+            database.remove(message.channel_id, channel_name, num, function (result) {
+                let content = '';
+                if (result == null)
+                    content = Messages.cant_data();
+                else if (result === -1)
+                    content = Messages.cant_remove();
+                else
+                    content = Messages.removed(num) + `\n${result}`;
 
-                    api.postEphemeral(message.channel_id, content, message.user_id);
-                });
+                api.postEphemeral(message.channel_id, content, message.user_id);
             });
         });
-    } else {
+    }
+    // 複数同時に削除するなら
+    // let matches = content.match(/^(\d)(\s*)(,(\s*)?\d)*$/g);
+    // if (matches) {
+    //     // コンマで分割しながら文字列中の空白を除去
+    //     let array = content.split(',').map(function (item) {
+    //         return item.trim();
+    //     });
+    //
+    //     // 削除すると番号が繰り下がるので逆順で処理する
+    //     array.sort(
+    //         function (a, b) {
+    //             return (a < b ? 1 : -1);
+    //         }
+    //     );
+    //
+    //     // To-Do 複数を指定すると一つしか消えないバグ
+    //     api.getChannelName(message.channel_id, function (channel_name) {
+    //         array.forEach(function (num) {
+    //             database.remove(message.channel_id, channel_name, num, function (result) {
+    //                 let content = '';
+    //                 if (result == null)
+    //                     content = Messages.cant_data(num);
+    //                 else if (result === -1)
+    //                     content = Messages.cant_remove(num);
+    //                 else
+    //                     content = Messages.removed(num) + `\n${result}`;
+    //
+    //                 api.postEphemeral(message.channel_id, content, message.user_id);
+    //             });
+    //         });
+    //     });
+    // }
+    else {
         noneOption(message);
     }
 }
