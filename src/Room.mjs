@@ -88,12 +88,10 @@ export function update(ids, names) {
         database.updateStayingUsers(ids, names);
     }
     isLocalArive = true;
-    console.log('func update: '+isLocalArive);
 }
 
 export function notificatePerHours() {
     console.log('notificatePerHoursコマンド実行');
-    console.log('func notificatePerHours: '+isLocalArive);
 
     // macアドレス収集しているローカルサーバが生きているならば
     if (isLocalArive) {
