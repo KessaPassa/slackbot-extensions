@@ -135,21 +135,13 @@ function switchProcess(message) {
         if (message.mention_text === 'help')
             etc.help(message);
 
-
+        // シャッフルする
         else if (message.mention_text.match(/shuffle/))
             etc.shuffle(message);
 
-        // メモに追加
-        else if (message.mention_text.match(/add (.*)/))
-            memo.add(message);
-
-        // 指定された番号のメモを削除
-        else if (message.mention_text.match(/remove (\d+)/))
-            memo.remove(message);
-
-        // メモを表示
-        else if (message.mention_text === 'memo')
-            memo.memo(message);
+        // メモ
+        else if (message.mention_text.match(/memo/))
+            memo.switchProcess(message);
 
         // 現在の在室状況
         else if (message.mention_text === 'stay')
