@@ -29,11 +29,12 @@ app.listen(app.get('port'), function () {
     console.log('server launched');
 });
 
+
 // ルートページ
 app.get('/', function (req, res) {
     res.header('Content-Type', 'text/plain;charset=utf-8');
-    res.status(200);
-    res.send('Bot Rebooted');
+    res.status(404);
+    res.send('root page');
     console.log('root page accessed');
 
     // botをrebootする

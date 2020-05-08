@@ -4,6 +4,7 @@ import * as Messages from './Messages';
 
 let stayingNamesForHours = new Set();
 let isLocalArive = false;
+let isNotice = true;
 
 // 発言場所がroom_nameチャンネルならtrue, そうじゃないならfalse
 function prepare(message, cb) {
@@ -92,6 +93,10 @@ export function update(ids, names) {
 
 export function notificatePerHours() {
     console.log('notificatePerHoursコマンド実行');
+    if (!isNotice){
+        console.log('更新がオフになっています');
+        return;
+    }
 
     // macアドレス収集しているローカルサーバが生きているならば
     if (isLocalArive) {
@@ -107,8 +112,8 @@ export function notificatePerHours() {
         }
 
         api.postMessage(process.env.room_id, list, function (message) {
-            // 1週間で消えるようにする
-            api.deleteMessage(message.channel, message.ts, 7 * 24 * 60 * 60 * 1000);
+            // 1日で消えるようにする
+            api.deleteMessage(message.channel, message.ts, 1 * 24 * 60 * 60 * 1000);
         });
 
         // リセットする
@@ -122,4 +127,18 @@ export function notificatePerHours() {
         });
     }
     isLocalArive = false;
+}
+
+// noticeを止める
+export function stopMessage(message) {
+    api.deleteMessage(message.channel_id, message.ts);
+    api.postMessage(message.channel_id, '通知を停止したよ')
+    isNotice = false;
+}
+
+// noticeを再開する
+export function startMessage(message) {
+    api.deleteMessage(message.channel_id, message.ts);
+    api.postMessage(message.channel_id, '通知を再開したよ')
+    isNotice = true;
 }

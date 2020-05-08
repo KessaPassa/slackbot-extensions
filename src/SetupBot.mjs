@@ -30,7 +30,7 @@ function rtmStart() {
     request.get({
         url: root_url + rtm,
         qs: {
-            token: process.env.access_token
+            token: process.env.token
         }
     }, function (err, res, body) {
         console.log(rtm);
@@ -131,8 +131,13 @@ function switchProcess(message) {
     // botにメンションなら
     if (message.mention_user === process.env.BOT_ID) {
 
+        if (message.mention_text === 'room message stop')
+            room.stopMessage(message);
+        else if (message.mention_text === 'room message start')
+            room.startMessage(message);
+
         // 説明書を表示
-        if (message.mention_text === 'help')
+        else if (message.mention_text === 'help')
             etc.help(message);
 
         // シャッフルする
