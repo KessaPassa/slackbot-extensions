@@ -30,11 +30,11 @@ function rtmStart() {
     request.get({
         url: root_url + rtm,
         qs: {
-            token: process.env.access_token
+            token: process.env.token
         }
     }, function (err, res, body) {
         console.log(rtm);
-        // console.log(JSON.parse(body));
+        console.log(JSON.parse(body));
         let websocketURL = JSON.parse(body).url;
         socket(websocketURL);
     });
