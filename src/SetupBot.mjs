@@ -34,7 +34,7 @@ function rtmStart() {
         }
     }, function (err, res, body) {
         console.log(rtm);
-        console.log(JSON.parse(body));
+        // console.log(JSON.parse(body));
         let websocketURL = JSON.parse(body).url;
         socket(websocketURL);
     });
