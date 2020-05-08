@@ -25,7 +25,9 @@ import * as bot from './src/SetupBot';
 bot.setup();
 
 // Run Server
-
+app.listen(app.get('port'), function () {
+    console.log('server launched');
+});
 
 
 // ルートページ
