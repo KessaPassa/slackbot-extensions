@@ -7,6 +7,10 @@
     "start": "node --experimental-modules Server.mjs",
     "dev": "NODE_ENV=development node --experimental-modules Server.mjs"
   },
+  "engines":{
+    "node":"v11.11.0",
+    "npm": "6.7.0"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
